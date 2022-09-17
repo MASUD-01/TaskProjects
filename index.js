@@ -18,8 +18,11 @@ async function run() {
         await client.connect()
         const calenderTask = client.db('taskla').collection('TaskProjects');
 
-        app.get('/task', async (req, res) => {
-            const alltask = await calenderTask.find().toArray()
+        app.get('/task/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id)
+            const query = { _id: ObjectId(id) }
+            const alltask = await calenderTask.findOne(query)
             res.send(alltask)
         })
         app.post('/task', async (req, res) => {
