@@ -1,15 +1,3 @@
-// const express = require('express')
-// const app = express()
-// const port = 4000
-
-// app.get('/', (req, res) => {
-//     res.send('Hello World!')
-// })
-
-// app.listen(port, () => {
-//     console.log(`Example app listening on port ${port}`)
-// })
-
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -28,13 +16,12 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         await client.connect()
-        const calenderTask = client.db('taskla').collection('indianTask');
-        //get all data from mongodb
+        const calenderTask = client.db('taskla').collection('TaskProjects');
+
         app.get('/task', async (req, res) => {
             const alltask = await calenderTask.find().toArray()
             res.send(alltask)
         })
-        //send mongodb data
         app.post('/task', async (req, res) => {
             const state = req.body;
             console.log(state);
@@ -49,7 +36,7 @@ async function run() {
 }
 run().catch(console.dir)
 app.get('/', (req, res) => {
-    res.send('calendar-app-appointment')
+    res.send('TaskProject')
 })
 
 
